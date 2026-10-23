@@ -2,10 +2,7 @@ import 'analyzer_context.dart';
 import 'analyzer_result.dart';
 
 class RecipientAnalyzer {
-  static AnalyzerResult analyze(
-    AnalyzerContext context,
-    String sender,
-  ) {
+  static AnalyzerResult analyze(AnalyzerContext context, String sender) {
     const labels = [
       'rechnung an',
       'rechnungsadresse',

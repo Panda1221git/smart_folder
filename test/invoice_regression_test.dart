@@ -17,7 +17,10 @@ MwSt 19%: 4,86
 Rechnungsendbetrag: 30,46
 ''');
 
-      expect(result.sender, 'SÜWE Vertriebs- und Dienstleistungsgesellschaft mbH & Co. KG');
+      expect(
+        result.sender,
+        'SÜWE Vertriebs- und Dienstleistungsgesellschaft mbH & Co. KG',
+      );
       expect(result.invoiceNumber, '6032837838');
       expect(result.date, '16.10.2026');
       expect(result.amount, '30,46 €');

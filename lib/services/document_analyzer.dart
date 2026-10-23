@@ -11,10 +11,7 @@ import 'net_amount_analyzer.dart';
 import 'tax_analyzer.dart';
 import 'recipient_analyzer.dart';
 
-/// SmartFolder orchestrator.
-/// Each field is intentionally delegated to a specialist analyzer.
-/// The public API remains compatible with the existing app:
-/// DocumentAnalyzer.analyze(text)
+/// Koordiniert die spezialisierten Analyzer für SmartFolder.
 class DocumentAnalyzer {
   static DocumentInfo analyze(String text) {
     final context = AnalyzerContext.fromText(text);
@@ -59,36 +56,59 @@ class DocumentAnalyzer {
   }) {
     final parts = <String>[];
 
-    if (date.isNotEmpty) parts.add(_normalizeDate(date));
-    if (sender.isNotEmpty) parts.add(sender);
-    if (documentType.isNotEmpty) parts.add(documentType);
-    if (invoiceNumber.isNotEmpty) parts.add(invoiceNumber);
+    final normalizedDate = _normalizeDate(date);
+    if (normalizedDate.isNotEmpty) {
+      parts.add(normalizedDate);
+    }
+
+    final cleanedSender = _cleanFileNamePart(sender);
+    if (cleanedSender.isNotEmpty) {
+      parts.add(cleanedSender);
+    }
+
+    final cleanedType = _cleanFileNamePart(documentType);
+    if (cleanedType.isNotEmpty) {
+      parts.add(cleanedType);
+    }
+
+    final cleanedNumber = _cleanFileNamePart(invoiceNumber);
+    if (cleanedNumber.isNotEmpty) {
+      parts.add(cleanedNumber);
+    }
 
     if (parts.isEmpty) return 'Dokument.pdf';
 
-    return '${_cleanFileName(parts.join('_'))}.pdf';
+    final baseName = parts.join('_');
+    return '${_cleanFileNamePart(baseName)}.pdf';
   }
 
   static String _normalizeDate(String date) {
-    final match = RegExp(r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$')
-        .firstMatch(date.trim());
+    final value = date.trim();
 
-    if (match == null) return date.trim();
+    final match = RegExp(
+      r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$',
+    ).firstMatch(value);
+
+    if (match == null) return _cleanFileNamePart(value);
 
     final day = match.group(1)!.padLeft(2, '0');
     final month = match.group(2)!.padLeft(2, '0');
-
     var year = match.group(3)!;
-    if (year.length == 2) year = '20$year';
+
+    if (year.length == 2) {
+      year = '20$year';
+    }
 
     return '$year-$month-$day';
   }
 
-  static String _cleanFileName(String value) {
+  static String _cleanFileNamePart(String value) {
     return value
-        .replaceAll(RegExp(r'[<>:"/\\|?*]'), '')
-        .replaceAll(RegExp(r'[\r\n]+'), ' ')
+        .replaceAll(RegExp(r'[<>:"/\\|?*\x00-\x1F]'), '')
+        .replaceAll(RegExp(r'[\r\n\t]+'), ' ')
         .replaceAll(RegExp(r'\s+'), ' ')
+        .replaceAll(RegExp(r'_+'), '_')
+        .replaceAll(RegExp(r'^[_ .]+|[_ .]+$'), '')
         .trim();
   }
 }

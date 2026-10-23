@@ -9,22 +9,34 @@ class DateAnalyzer {
     final patterns = [
       RegExp(
         r'(?:rechnungs[\s-]*datum|rechnung[\s-]*datum)\s*:?\s*(' +
-            _germanDate.pattern + r'|' + _isoDate.pattern + r')',
+            _germanDate.pattern +
+            r'|' +
+            _isoDate.pattern +
+            r')',
         caseSensitive: false,
       ),
       RegExp(
         r'(?:ausstellungsdatum|ausgestellt\s+am|belegdatum)\s*:?\s*(' +
-            _germanDate.pattern + r'|' + _isoDate.pattern + r')',
+            _germanDate.pattern +
+            r'|' +
+            _isoDate.pattern +
+            r')',
         caseSensitive: false,
       ),
       RegExp(
         r'\bdatum\s*:?\s*(' +
-            _germanDate.pattern + r'|' + _isoDate.pattern + r')',
+            _germanDate.pattern +
+            r'|' +
+            _isoDate.pattern +
+            r')',
         caseSensitive: false,
       ),
       RegExp(
         r'\brechnung\s+vom\s+(' +
-            _germanDate.pattern + r'|' + _isoDate.pattern + r')',
+            _germanDate.pattern +
+            r'|' +
+            _isoDate.pattern +
+            r')',
         caseSensitive: false,
       ),
     ];
@@ -39,7 +51,11 @@ class DateAnalyzer {
 
         return AnalyzerResult(
           value: value,
-          confidence: patternIndex == 0 ? 0.99 : patternIndex == 3 ? 0.90 : 0.96,
+          confidence: patternIndex == 0
+              ? 0.99
+              : patternIndex == 3
+              ? 0.90
+              : 0.96,
           evidence: line,
           source: 'DateAnalyzer',
         );
@@ -65,8 +81,9 @@ class DateAnalyzer {
       month = int.parse(parts[1]);
       day = int.parse(parts[2]);
     } else {
-      final match = RegExp(r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$')
-          .firstMatch(value);
+      final match = RegExp(
+        r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$',
+      ).firstMatch(value);
       if (match == null) return false;
       day = int.parse(match.group(1)!);
       month = int.parse(match.group(2)!);

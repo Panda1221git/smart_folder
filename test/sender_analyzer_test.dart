@@ -1,4 +1,3 @@
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:smart_folder/services/analyzer_context.dart';
 import 'package:smart_folder/services/sender_analyzer.dart';

@@ -82,9 +82,6 @@ class TaxAnalyzer {
       r'(?<![\d.])(?:EUR|€)?\s*((?:\d{1,3}(?:\.\d{3})+|\d+),\d{2})\s*(?:€|EUR)?',
       caseSensitive: false,
     );
-    return [
-      for (final match in regex.allMatches(line))
-        '${match.group(1)!} €',
-    ];
+    return [for (final match in regex.allMatches(line)) '${match.group(1)!} €'];
   }
 }

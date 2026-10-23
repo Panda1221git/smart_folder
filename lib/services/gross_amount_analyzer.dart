@@ -1,4 +1,3 @@
-
 import 'analyzer_context.dart';
 import 'analyzer_result.dart';
 
@@ -45,9 +44,11 @@ class GrossAmountAnalyzer {
         }
 
         // Betrag steht möglicherweise in einer Folgezeile.
-        for (var forward = 1;
-            forward <= 3 && i + forward < lines.length;
-            forward++) {
+        for (
+          var forward = 1;
+          forward <= 3 && i + forward < lines.length;
+          forward++
+        ) {
           final next = lines[i + forward].trim();
 
           if (next.isEmpty || _isCurrencyOnly(next)) {
@@ -189,9 +190,6 @@ class GrossAmountAnalyzer {
       caseSensitive: false,
     );
 
-    return [
-      for (final match in regex.allMatches(text))
-        '${match.group(1)!} €',
-    ];
+    return [for (final match in regex.allMatches(text)) '${match.group(1)!} €'];
   }
 }

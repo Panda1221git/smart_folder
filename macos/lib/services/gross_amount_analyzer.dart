@@ -3,7 +3,6 @@ import 'analyzer_result.dart';
 
 class GrossAmountAnalyzer {
   static AnalyzerResult analyze(AnalyzerContext context) {
-    
     const priorityLabels = [
       'noch zu zahlen',
       'zahlbetrag',
@@ -111,10 +110,7 @@ class GrossAmountAnalyzer {
       caseSensitive: false,
     );
 
-    return [
-      for (final match in regex.allMatches(line))
-        '${match.group(1)!} €',
-    ];
+    return [for (final match in regex.allMatches(line)) '${match.group(1)!} €'];
   }
 
   static bool _looksLikeDocumentField(String value) {

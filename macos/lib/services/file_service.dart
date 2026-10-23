@@ -18,9 +18,6 @@ class FileService {
     required String fileName,
     required Uint8List bytes,
   }) async {
-    return FilePicker.saveFile(
-      fileName: fileName,
-      bytes: bytes,
-    );
+    return FilePicker.saveFile(fileName: fileName, bytes: bytes);
   }
 }

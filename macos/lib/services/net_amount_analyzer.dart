@@ -10,9 +10,7 @@ class NetAmountAnalyzer {
         final index = lower.indexOf(label);
         if (index < 0) continue;
 
-        final money = _moneyMatches(
-          line.substring(index + label.length),
-        );
+        final money = _moneyMatches(line.substring(index + label.length));
         if (money.isNotEmpty) {
           return AnalyzerResult(
             value: money.first,
@@ -67,9 +65,6 @@ class NetAmountAnalyzer {
       r'(?<![\d.])(?:EUR|€)?\s*((?:\d{1,3}(?:\.\d{3})+|\d+),\d{2})\s*(?:€|EUR)?',
       caseSensitive: false,
     );
-    return [
-      for (final match in regex.allMatches(line))
-        '${match.group(1)!} €',
-    ];
+    return [for (final match in regex.allMatches(line)) '${match.group(1)!} €'];
   }
 }

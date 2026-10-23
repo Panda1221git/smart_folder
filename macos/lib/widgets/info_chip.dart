@@ -18,14 +18,6 @@ class InfoChip extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return Chip(
-      avatar: Icon(
-        icon,
-        size: 18,
-      ),
-      label: Text(
-        '$label: $value',
-      ),
-    );
+    return Chip(avatar: Icon(icon, size: 18), label: Text('$label: $value'));
   }
 }

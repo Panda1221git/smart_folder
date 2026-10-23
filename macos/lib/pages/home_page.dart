@@ -42,10 +42,7 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    await _analyzeFiles(
-      _lastPickedFiles,
-      replaceExisting: true,
-    );
+    await _analyzeFiles(_lastPickedFiles, replaceExisting: true);
   }
 
   Future<void> _analyzeFiles(
@@ -159,9 +156,7 @@ class _HomePageState extends State<HomePage> {
 
       if (result != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Datei erfolgreich gespeichert.'),
-          ),
+          const SnackBar(content: Text('Datei erfolgreich gespeichert.')),
         );
       }
     } catch (e) {
@@ -173,11 +168,9 @@ class _HomePageState extends State<HomePage> {
         document.isSaving = false;
       });
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Fehler beim Speichern: $e'),
-        ),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Fehler beim Speichern: $e')));
     }
   }
 
@@ -208,12 +201,7 @@ class _HomePageState extends State<HomePage> {
           children: [
             Icon(Icons.folder_special),
             SizedBox(width: 10),
-            Text(
-              'SmartFolder',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            Text('SmartFolder', style: TextStyle(fontWeight: FontWeight.bold)),
           ],
         ),
         actions: [
@@ -234,9 +222,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: Center(
         child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 1000,
-          ),
+          constraints: const BoxConstraints(maxWidth: 1000),
           child: Padding(
             padding: const EdgeInsets.all(24),
             child: Column(
@@ -244,10 +230,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 _buildHeader(),
                 const SizedBox(height: 24),
-                UploadArea(
-                  onPickFiles: _pickFiles,
-                  isLoading: _isLoading,
-                ),
+                UploadArea(onPickFiles: _pickFiles, isLoading: _isLoading),
                 const SizedBox(height: 24),
                 Expanded(
                   child: _documents.isEmpty
@@ -268,9 +251,9 @@ class _HomePageState extends State<HomePage> {
       children: [
         Text(
           'Deine Dokumente.',
-          style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+          style: Theme.of(
+            context,
+          ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 6),
         Text(
@@ -295,9 +278,9 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(height: 16),
           Text(
             'Noch keine Dokumente',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: Theme.of(
+              context,
+            ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           const Text(
@@ -358,9 +341,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     document.originalFileName,
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 6),
                   const Text(
@@ -399,10 +380,9 @@ class AnalyzedDocument {
     TextEditingController? fileNameController,
     this.isSaving = false,
     this.isSaved = false,
-  }) : fileNameController = fileNameController ??
-            TextEditingController(
-              text: info.suggestedFileName,
-            );
+  }) : fileNameController =
+           fileNameController ??
+           TextEditingController(text: info.suggestedFileName);
 
   void dispose() {
     fileNameController.dispose();

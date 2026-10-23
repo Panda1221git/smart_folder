@@ -4,22 +4,10 @@ import 'analyzer_result.dart';
 class InvoiceNumberAnalyzer {
   static AnalyzerResult analyze(AnalyzerContext context) {
     final labelPatterns = [
-      RegExp(
-        r'\brechnungs[\s-]*nummer\s*:?\s*(.+)$',
-        caseSensitive: false,
-      ),
-      RegExp(
-        r'\brechnungs[\s-]*nr\.?\s*:?\s*(.+)$',
-        caseSensitive: false,
-      ),
-      RegExp(
-        r'\brechnung[\s-]*nummer\s*:?\s*(.+)$',
-        caseSensitive: false,
-      ),
-      RegExp(
-        r'\brechnung[\s-]*nr\.?\s*:?\s*(.+)$',
-        caseSensitive: false,
-      ),
+      RegExp(r'\brechnungs[\s-]*nummer\s*:?\s*(.+)$', caseSensitive: false),
+      RegExp(r'\brechnungs[\s-]*nr\.?\s*:?\s*(.+)$', caseSensitive: false),
+      RegExp(r'\brechnung[\s-]*nummer\s*:?\s*(.+)$', caseSensitive: false),
+      RegExp(r'\brechnung[\s-]*nr\.?\s*:?\s*(.+)$', caseSensitive: false),
     ];
 
     for (final line in context.lines) {
@@ -79,10 +67,7 @@ class InvoiceNumberAnalyzer {
     }
 
     if (_containsInvoiceLabel(context.lines)) {
-      final standalone = RegExp(
-        r'^(?:RE|RG|R)\d{5,}$',
-        caseSensitive: false,
-      );
+      final standalone = RegExp(r'^(?:RE|RG|R)\d{5,}$', caseSensitive: false);
 
       for (final line in context.lines) {
         final candidate = _firstIdentifier(line);

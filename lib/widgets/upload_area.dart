@@ -25,10 +25,7 @@ class UploadArea extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'PDF-Rechnungen auswählen',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             const Text(

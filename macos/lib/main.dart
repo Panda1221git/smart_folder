@@ -15,9 +15,7 @@ class SmartFolderApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'SmartFolder',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.blue,
-        ),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const HomePage(),

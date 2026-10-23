@@ -9,6 +9,7 @@ import '../services/file_service.dart';
 import '../services/pdf_service.dart';
 import '../widgets/document_card.dart';
 import '../widgets/upload_area.dart';
+import '../services/document_analyzer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -75,6 +76,9 @@ class _HomePageState extends State<HomePage> {
         try {
           final bytes = await file.readAsBytes();
           final text = PdfService.extractText(bytes);
+
+          debugPrint('PDF-TEXT (${file.name}):\n$text');
+
           final info = DocumentAnalyzer.analyze(text);
 
           final document = AnalyzedDocument(

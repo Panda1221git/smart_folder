@@ -1,4 +1,3 @@
-
 import 'analyzer_context.dart';
 import 'analyzer_result.dart';
 
@@ -60,8 +59,7 @@ class SenderAnalyzer {
       for (var j = i; j < lines.length && j <= i + 5; j++) {
         final candidate = _extractLegalName(lines[j]);
 
-        if (candidate.isNotEmpty &&
-            !_isForbiddenLine(candidate)) {
+        if (candidate.isNotEmpty && !_isForbiddenLine(candidate)) {
           return AnalyzerResult(
             value: candidate,
             confidence: 0.97,

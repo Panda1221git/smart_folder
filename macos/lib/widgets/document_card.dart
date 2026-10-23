@@ -58,10 +58,7 @@ class DocumentCard extends StatelessWidget {
             // ------------------------------------------------------------
             const Text(
               'Erkannte Informationen',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 12),
@@ -90,11 +87,7 @@ class DocumentCard extends StatelessWidget {
                   label: 'Rechnungsnummer',
                   value: info.invoiceNumber,
                 ),
-                InfoChip(
-                  icon: Icons.euro,
-                  label: 'Betrag',
-                  value: info.amount,
-                ),
+                InfoChip(icon: Icons.euro, label: 'Betrag', value: info.amount),
               ],
             ),
 
@@ -105,10 +98,7 @@ class DocumentCard extends StatelessWidget {
             // ------------------------------------------------------------
             const Text(
               'Dateiname',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
 
             const SizedBox(height: 8),
@@ -131,15 +121,13 @@ class DocumentCard extends StatelessWidget {
               width: double.infinity,
               child: FilledButton.icon(
                 onPressed: isSaving || isSaved ? null : onSave,
-                icon: Icon(
-                  isSaved ? Icons.check : Icons.save,
-                ),
+                icon: Icon(isSaved ? Icons.check : Icons.save),
                 label: Text(
                   isSaved
                       ? 'Gespeichert'
                       : isSaving
-                          ? 'Speichere...'
-                          : 'Datei speichern',
+                      ? 'Speichere...'
+                      : 'Datei speichern',
                 ),
               ),
             ),
@@ -154,21 +142,17 @@ class DocumentCard extends StatelessWidget {
               childrenPadding: EdgeInsets.zero,
               title: const Text(
                 'Extrahierter Text',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontWeight: FontWeight.w600),
               ),
               children: [
                 Container(
                   width: double.infinity,
-                  constraints: const BoxConstraints(
-                    maxHeight: 300,
-                  ),
+                  constraints: const BoxConstraints(maxHeight: 300),
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .surfaceContainerHighest,
+                    color: Theme.of(
+                      context,
+                    ).colorScheme.surfaceContainerHighest,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: SingleChildScrollView(
