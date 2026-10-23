@@ -282,19 +282,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildEmptyState() {
-    return Center(
+ 
+Widget _buildEmptyState() {
+  return SingleChildScrollView(
+    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12),
+    child: Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(
             Icons.auto_awesome,
-            size: 56,
+            size: 48,
             color: Theme.of(context).colorScheme.primary,
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
           Text(
             'Noch keine Dokumente',
+            textAlign: TextAlign.center,
             style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -305,7 +310,7 @@ class _HomePageState extends State<HomePage> {
             textAlign: TextAlign.center,
           ),
           if (_lastPickedFiles.isNotEmpty) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: 16),
             FilledButton.icon(
               onPressed: _isLoading ? null : _refreshDocuments,
               icon: const Icon(Icons.refresh),
@@ -314,8 +319,9 @@ class _HomePageState extends State<HomePage> {
           ],
         ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   Widget _buildDocumentList() {
     return ListView.builder(

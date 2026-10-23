@@ -28,9 +28,7 @@ class RecipientAnalyzer {
         if (_looksLikeAddress(candidate)) continue;
         if (candidate == sender) continue;
 
-        if (_looksLikePersonName(candidate) ||
-            candidate.toLowerCase().contains('brennstoffhandel') ||
-            candidate.toLowerCase().contains('brennholzhandel')) {
+        if (_looksLikePersonName(candidate)) {
           return AnalyzerResult(
             value: candidate,
             confidence: 0.93,

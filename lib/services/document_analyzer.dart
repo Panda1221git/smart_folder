@@ -1,3 +1,4 @@
+
 import '../models/document_info.dart';
 import 'analyzer_context.dart';
 import 'document_type_analyzer.dart';
@@ -11,7 +12,6 @@ import 'tax_analyzer.dart';
 import 'recipient_analyzer.dart';
 
 /// SmartFolder orchestrator.
-///
 /// Each field is intentionally delegated to a specialist analyzer.
 /// The public API remains compatible with the existing app:
 /// DocumentAnalyzer.analyze(text)
@@ -59,18 +59,10 @@ class DocumentAnalyzer {
   }) {
     final parts = <String>[];
 
-    if (date.isNotEmpty) {
-      parts.add(_normalizeDate(date));
-    }
-    if (sender.isNotEmpty) {
-      parts.add(sender);
-    }
-    if (documentType.isNotEmpty) {
-      parts.add(documentType);
-    }
-    if (invoiceNumber.isNotEmpty) {
-      parts.add(invoiceNumber);
-    }
+    if (date.isNotEmpty) parts.add(_normalizeDate(date));
+    if (sender.isNotEmpty) parts.add(sender);
+    if (documentType.isNotEmpty) parts.add(documentType);
+    if (invoiceNumber.isNotEmpty) parts.add(invoiceNumber);
 
     if (parts.isEmpty) return 'Dokument.pdf';
 
@@ -78,9 +70,8 @@ class DocumentAnalyzer {
   }
 
   static String _normalizeDate(String date) {
-    final match = RegExp(
-      r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$',
-    ).firstMatch(date.trim());
+    final match = RegExp(r'^(\d{1,2})\.(\d{1,2})\.(\d{2,4})$')
+        .firstMatch(date.trim());
 
     if (match == null) return date.trim();
 

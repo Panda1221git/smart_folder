@@ -79,7 +79,7 @@ class TaxAnalyzer {
 
   static List<String> _moneyMatches(String line) {
     final regex = RegExp(
-      r'(?<![\d.])((?:\d{1,3}(?:\.\d{3})+|\d+),\d{2})\s*(?:€|EUR)?',
+      r'(?<![\d.])(?:EUR|€)?\s*((?:\d{1,3}(?:\.\d{3})+|\d+),\d{2})\s*(?:€|EUR)?',
       caseSensitive: false,
     );
     return [
