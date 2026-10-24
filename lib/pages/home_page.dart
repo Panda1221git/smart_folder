@@ -11,6 +11,7 @@ import '../services/pdf_service.dart';
 import '../widgets/document_card.dart';
 import '../widgets/upload_area.dart';
 import '../services/document_database_service.dart';
+import '../services/external_storage_service.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -33,11 +34,64 @@ final TextEditingController _searchController =
     TextEditingController();
 
 String _searchQuery = '';
+
+String? _archivePath;
+bool _isSelectingArchive = false;
   
 @override
 void initState() {
   super.initState();
   _loadSavedDocuments();
+  _loadArchivePath();
+}
+
+Future<void> _loadArchivePath() async {
+  final path = await ExternalStorageService.getArchivePath();
+
+  if (!mounted) return;
+
+  setState(() {
+    _archivePath = path;
+  });
+}
+
+Future<void> _selectArchiveFolder() async {
+  setState(() {
+    _isSelectingArchive = true;
+  });
+
+  try {
+    final path =
+        await ExternalStorageService.selectArchiveFolder();
+
+    if (!mounted) return;
+
+    if (path != null) {
+      setState(() {
+        _archivePath = path;
+      });
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Archivordner erfolgreich gespeichert.'),
+        ),
+      );
+    }
+  } catch (e) {
+    if (!mounted) return;
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Fehler bei der Ordnerauswahl: $e'),
+      ),
+    );
+  } finally {
+    if (mounted) {
+      setState(() {
+        _isSelectingArchive = false;
+      });
+    }
+  }
 }
 
 Future<void> _loadSavedDocuments() async {
@@ -576,6 +630,54 @@ Widget build(BuildContext context) {
                 onPickFiles: _pickFiles,
                 isLoading: _isLoading,
               ),
+              
+const SizedBox(height: 12),
+
+Card(
+  child: Padding(
+    padding: const EdgeInsets.all(16),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Externes Dokumentenarchiv',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          _archivePath ?? 'Noch kein Archivordner ausgewählt',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        const SizedBox(height: 12),
+        OutlinedButton.icon(
+          onPressed: _isSelectingArchive
+              ? null
+              : _selectArchiveFolder,
+          icon: _isSelectingArchive
+              ? const SizedBox(
+                  width: 18,
+                  height: 18,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                )
+              : const Icon(Icons.folder_open),
+          label: Text(
+            _isSelectingArchive
+                ? 'Ordner wird geöffnet ...'
+                : 'Archivordner auswählen',
+          ),
+        ),
+      ],
+    ),
+  ),
+),
+
+const SizedBox(height: 16),
+
               const SizedBox(height: 16),
 
               // Suchfeld
