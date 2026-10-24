@@ -3,9 +3,6 @@ import 'analyzer_context.dart';
 import 'analyzer_result.dart';
 
 class DateAnalyzer {
-  static final RegExp _germanDate =
-      RegExp(r'\d{1,2}\.\d{1,2}\.\d{2,4}');
-
   static final RegExp _isoDate =
       RegExp(r'\d{4}-\d{2}-\d{2}');
 

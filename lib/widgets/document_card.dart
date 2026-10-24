@@ -11,6 +11,10 @@ class DocumentCard extends StatelessWidget {
   final bool isSaving;
   final bool isSaved;
   final VoidCallback onSave;
+  final String? storedFilePath;
+  final VoidCallback? onOpen;
+  final VoidCallback? onDelete;
+  final VoidCallback? onEdit;
 
   const DocumentCard({
     super.key,
@@ -20,6 +24,10 @@ class DocumentCard extends StatelessWidget {
     required this.isSaving,
     required this.isSaved,
     required this.onSave,
+    this.storedFilePath,
+    this.onOpen,
+    this.onDelete,
+    this.onEdit,
   });
 
   @override
@@ -91,6 +99,22 @@ class DocumentCard extends StatelessWidget {
               ],
             ),
 
+ExpansionTile(
+  tilePadding: EdgeInsets.zero,
+  childrenPadding: const EdgeInsets.only(bottom: 12),
+  title: const Text(
+    'Alle Rechnungsdaten anzeigen',
+    style: TextStyle(fontWeight: FontWeight.w600),
+  ),
+  children: [
+    _detailRow('Empfänger', info.recipient),
+    _detailRow('Abrechnungszeitraum', info.billingPeriod),
+    _detailRow('Nettobetrag', info.netAmount),
+    _detailRow('Steuerbetrag', info.taxAmount),
+    _detailRow('Steuersatz', info.taxRate),
+  ],
+),
+
             const SizedBox(height: 20),
 
             // ------------------------------------------------------------
@@ -115,6 +139,19 @@ class DocumentCard extends StatelessWidget {
             const SizedBox(height: 12),
 
             // ------------------------------------------------------------
+            
+if (onEdit != null) ...[
+  SizedBox(
+    width: double.infinity,
+    child: OutlinedButton.icon(
+      onPressed: onEdit,
+      icon: const Icon(Icons.edit_note),
+      label: const Text('Rechnungsdaten bearbeiten'),
+    ),
+  ),
+  const SizedBox(height: 12),
+],
+
             // Speichern
             // ------------------------------------------------------------
             SizedBox(
@@ -131,6 +168,36 @@ class DocumentCard extends StatelessWidget {
                 ),
               ),
             ),
+
+            
+if (storedFilePath != null && onOpen != null) ...[
+  SizedBox(
+    width: double.infinity,
+    child: OutlinedButton.icon(
+      onPressed: onOpen,
+      icon: const Icon(Icons.open_in_new),
+      label: const Text('PDF öffnen'),
+    ),
+  ),
+  const SizedBox(height: 12),
+],
+
+
+if (onDelete != null) ...[
+  SizedBox(
+    width: double.infinity,
+    child: OutlinedButton.icon(
+      onPressed: onDelete,
+      icon: const Icon(Icons.delete_outline),
+      label: const Text('Dokument löschen'),
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Theme.of(context).colorScheme.error,
+      ),
+    ),
+  ),
+  const SizedBox(height: 12),
+],
+
 
             const SizedBox(height: 12),
 
@@ -167,6 +234,32 @@ class DocumentCard extends StatelessWidget {
             ),
           ],
         ),
+      
+      ),
+    );
+  }
+
+  Widget _detailRow(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          SizedBox(
+            width: 170,
+            child: Text(
+              label,
+              style: const TextStyle(
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+          Expanded(
+            child: SelectableText(
+              value.isEmpty ? 'Nicht erkannt' : value,
+            ),
+          ),
+        ],
       ),
     );
   }
